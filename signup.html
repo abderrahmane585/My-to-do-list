@@ -3,48 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up - Para Flash</title>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<title>Sign Up - My To-Do App</title>
 <style>
-body{display:flex;align-items:center;justify-content:center;height:100vh;background:#667eea;color:white;font-family:'Inter',sans-serif;}
-.container{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);padding:50px;border-radius:25px;text-align:center;box-shadow:0 15px 30px rgba(0,0,0,0.2);}
-input{padding:12px 18px;margin:10px 0;width:100%;border-radius:15px;border:none;outline:none;}
-button{padding:12px 20px;margin:10px;width:100%;border:none;border-radius:15px;background:#38a169;color:white;cursor:pointer;}
-button:hover{transform:scale(1.05);}
+body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg,#667eea,#764ba2,#f093fb); display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+.container { background: rgba(255,255,255,0.15); padding:50px; border-radius:20px; backdrop-filter:blur(20px); text-align:center; }
+input { padding:15px; width:80%; margin-bottom:20px; border-radius:10px; border:2px solid rgba(255,255,255,0.3); outline:none; }
+button { padding:15px 30px; border:none; border-radius:10px; cursor:pointer; background:#667eea; color:white; font-size:1rem; margin-bottom:10px; }
+button:hover { background:#764ba2; }
 </style>
 </head>
 <body>
 <div class="container">
-<h2>Create an account</h2>
-<input type="text" id="username" placeholder="Enter your username">
-<button onclick="signup()">Sign Up</button>
-<p>Or sign up with Google:</p>
-<div id="g_id_onload"
-     data-client_id="YOUR_GOOGLE_CLIENT_ID"
-     data-callback="handleCredentialResponse"
-     data-auto_prompt="false">
-</div>
-<div class="g_id_signin" data-type="standard"></div>
-<p>Already have an account? <a href="login.html" style="color:#fff;text-decoration:underline;">Login</a></p>
+    <h1>Sign Up</h1>
+    <input type="text" id="newuser" placeholder="Choose a username"><br>
+    <button onclick="signup()">Sign Up</button>
+    <p>Already have an account? <a href="login.html">Login</a></p>
 </div>
 
 <script>
 function signup(){
-    const username = document.getElementById('username').value.trim();
-    if(!username){alert('Enter a username'); return;}
-    localStorage.setItem('currentUser', username);
-    localStorage.setItem(username+'_tasks','[]');
-    window.location.href='index.html';
+    const username = document.getElementById("newuser").value.trim();
+    if(!username) return alert("Enter username");
+    if(localStorage.getItem(username+"_tasks")) return alert("Username exists");
+    localStorage.setItem("currentUser", username);
+    localStorage.setItem(username+"_tasks", "[]");
+    window.location.href="index.html";
 }
 
-// Google signup/login
-function handleCredentialResponse(response){
-    const id_token = response.credential;
-    const googleUser = 'google_'+id_token;
-    localStorage.setItem('currentUser', googleUser);
-    localStorage.setItem(googleUser+'_tasks','[]');
-    window.location.href='index.html';
+// Skip if logged in
+if(localStorage.getItem("currentUser")){
+    window.location.href = "index.html";
 }
 </script>
 </body>
 </html>
+
