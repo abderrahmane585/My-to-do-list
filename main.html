@@ -3,44 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome - Para Flash</title>
-<link rel="icon" href="favicon.png">
+<title>Welcome - My To-Do App</title>
 <style>
-body {
-    font-family: 'Inter', sans-serif;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    height:100vh;
-    background: linear-gradient(135deg,#667eea,#764ba2,#f093fb,#4facfe,#00f2fe);
-    background-size:400% 400%;
-    animation:gradShift 15s ease infinite;
-    color:white;
-}
-@keyframes gradShift {
-    0%,100% {background-position:0% 50%;}
-    50% {background-position:100% 50%;}
-}
-button {
-    padding:15px 30px;
-    margin:15px;
-    border:none;
-    border-radius:25px;
-    font-size:1.1rem;
-    cursor:pointer;
-    background:linear-gradient(135deg,#48bb78,#38a169);
-    color:white;
-    transition:0.3s;
-}
-button:hover {transform:scale(1.05);}
-h1 {font-size:2.8rem; margin-bottom:20px; text-shadow:0 0 15px rgba(0,0,0,0.3);}
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+    .container {
+        text-align: center;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(20px);
+        padding: 50px;
+        border-radius: 20px;
+    }
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: white;
+    }
+    button {
+        padding: 15px 30px;
+        margin: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        color: white;
+        background: #667eea;
+        transition: 0.3s;
+    }
+    button:hover { background: #764ba2; }
 </style>
 </head>
 <body>
-<h1>Welcome to Para Flash</h1>
-<button onclick="window.location.href='login.html'">I have an account</button>
-<button onclick="window.location.href='signup.html'">Sign up</button>
+
+<div class="container">
+    <h1>Welcome to My To-Do App</h1>
+    <button onclick="window.location.href='login.html'">Login</button>
+    <button onclick="window.location.href='signup.html'">Sign Up</button>
+</div>
+
+<script>
+    // Skip main if already logged in
+    const currentUser = localStorage.getItem("currentUser");
+    if(currentUser){
+        window.location.href = "index.html";
+    }
+</script>
+
 </body>
 </html>
 
