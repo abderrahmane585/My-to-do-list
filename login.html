@@ -3,61 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login – To-Do App</title>
+<title>Login - Para Flash</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-body { font-family: 'Inter', sans-serif; background:#667eea; display:flex; justify-content:center; align-items:center; min-height:100vh; color:white; }
-.container { background:rgba(0,0,0,0.2); padding:50px; border-radius:20px; text-align:center; }
-h1{margin-bottom:20px;}
-input {padding:12px; margin:10px 0; border-radius:10px; border:none; width:80%; }
-button {padding:12px 25px; border:none; border-radius:10px; cursor:pointer; margin-top:10px; background:#48bb78; color:white; font-weight:600;}
-button:hover{background:#38a169;}
-.google-btn {background:white;color:black;width:90%;display:block;margin:10px auto;padding:12px;border-radius:10px;font-weight:600;}
-a{color:#fff; text-decoration:underline; cursor:pointer;}
+body{display:flex;align-items:center;justify-content:center;height:100vh;background:#667eea;color:white;font-family:'Inter',sans-serif;}
+.container{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);padding:50px;border-radius:25px;text-align:center;box-shadow:0 15px 30px rgba(0,0,0,0.2);}
+input{padding:12px 18px;margin:10px 0;width:100%;border-radius:15px;border:none;outline:none;}
+button{padding:12px 20px;margin:10px;width:100%;border:none;border-radius:15px;background:#38a169;color:white;cursor:pointer;}
+button:hover{transform:scale(1.05);}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>Login</h1>
-<input type="text" id="username" placeholder="Enter username"><br>
+<h2>Login</h2>
+<input type="text" id="username" placeholder="Enter your username">
 <button onclick="login()">Login</button>
-
-<div id="googleButton"></div>
-
-<p>Don't have an account? <a onclick="location.href='signup.html'">Sign Up</a></p>
+<p>Or login with Google:</p>
+<div id="g_id_onload"
+     data-client_id="YOUR_GOOGLE_CLIENT_ID"
+     data-callback="handleCredentialResponse"
+     data-auto_prompt="false">
 </div>
-
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<div class="g_id_signin" data-type="standard"></div>
+<p>No account? <a href="signup.html" style="color:#fff;text-decoration:underline;">Sign Up</a></p>
+</div>
 
 <script>
 function login(){
-    const username = document.getElementById("username").value.trim();
-    if(username){
-        localStorage.setItem("currentUser",username);
-        if(!localStorage.getItem(username+"_tasks")) localStorage.setItem(username+"_tasks",JSON.stringify([]));
-        window.location.href="index.html";
-    }else alert("Enter username");
+    const username=document.getElementById('username').value.trim();
+    if(!username){alert('Enter username');return;}
+    if(!localStorage.getItem(username+'_tasks')) localStorage.setItem(username+'_tasks','[]');
+    localStorage.setItem('currentUser',username);
+    window.location.href='index.html';
 }
 
-// Google Login
 function handleCredentialResponse(response){
-    const userObj = jwt_decode(response.credential);
-    const username = userObj.name||userObj.email;
-    localStorage.setItem("currentUser",username);
-    if(!localStorage.getItem(username+"_tasks")) localStorage.setItem(username+"_tasks",JSON.stringify([]));
-    window.location.href="index.html";
-}
-
-window.onload = function(){
-    google.accounts.id.initialize({
-        client_id: "YOUR_NEW_CLIENT_ID",
-        callback: handleCredentialResponse
-    });
-    google.accounts.id.renderButton(
-        document.getElementById("googleButton"),
-        { theme: "outline", size: "large", width:"250" }
-    );
+    const id_token = response.credential;
+    const googleUser = 'google_'+id_token;
+    if(!localStorage.getItem(googleUser+'_tasks')) localStorage.setItem(googleUser+'_tasks','[]');
+    localStorage.setItem('currentUser', googleUser);
+    window.location.href='index.html';
 }
 </script>
 </body>
 </html>
+
