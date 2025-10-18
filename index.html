@@ -573,6 +573,7 @@
 </button>
 
     <script>
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         let tasks = [];
         let currentFilter = 'all';
         let particlesEnabled = true;
@@ -614,7 +615,8 @@
         // Add task function
         function addTask() {
             const taskText = taskInput.value.trim();
-            if (taskText === '') return;
+            if (taskText === '') return
+            localStorage.setItem('tasks', JSON.stringify(tasks));
 
             const task = {
                 id: Date.now(),
@@ -834,4 +836,5 @@ function login() {
 
     </script>
 </body>
+
 </html>
