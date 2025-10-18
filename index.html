@@ -43,10 +43,17 @@
     <ul id="todoList"></ul>
 </div>
 
-<button onclick="logout()" 
-  style="margin-top:15px; background:#e74c3c; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer;">
-  Logout
+<button onclick="logout()" style="margin-top:15px; background:#e74c3c; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer;">
+Logout
 </button>
+
+<script>
+function logout() {
+  localStorage.removeItem('currentUser');
+  window.location.href='main.html';
+}
+</script>
+
 
 <script>
 let currentUser = localStorage.getItem('currentUser');
@@ -116,3 +123,4 @@ window.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+
