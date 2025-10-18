@@ -167,95 +167,143 @@ h1{font-size:2.5rem;}
 .theme-toggle{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:12px 20px;color:white;cursor:pointer;transition:all 0.3s ease;font-size:0.9rem;}
 .theme-toggle:hover{background:rgba(255,255,255,0.15);transform:scale(1.05);}
 
-    /* ===== Mobile Responsiveness ===== */
+    /* ===== Improved Mobile Responsiveness ===== */
 @media (max-width: 992px) {
     .container {
-        padding: 40px 30px;
-        margin: 15px;
+        padding: 30px 20px;
+        margin: 10px;
+        border-radius: 25px;
     }
+
     h1 {
-        font-size: 3rem;
+        font-size: 2.8rem;
     }
+
+    .subtitle {
+        font-size: 1rem;
+        text-align: center;
+    }
+
     .input-section {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
     }
+
     #taskInput, #addBtn {
         width: 100%;
-        padding: 18px 20px;
+        padding: 16px 18px;
+        font-size: 1rem;
     }
+
     .stats {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
     }
+
     .filter-buttons {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
     }
+
     .todo-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
-        padding: 20px;
-    }
-    .todo-item .task-content {
-        width: 100%;
+        padding: 18px;
         gap: 10px;
     }
+
+    .todo-item .task-content {
+        width: 100%;
+        gap: 12px;
+    }
+
     .todo-item .task-actions {
         width: 100%;
         justify-content: space-between;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
     }
+
     .delete-btn {
         width: 100%;
-        text-align: center;
-        margin-top: 10px;
+        margin-top: 8px;
+        font-size: 0.9rem;
+        padding: 12px;
     }
+
     .task-text {
         font-size: 1rem;
+    }
+
+    .task-time {
+        font-size: 0.85rem;
+    }
+
+    .checkbox {
+        width: 32px;
+        height: 32px;
     }
 }
 
-/* ===== Extra Small Screens ===== */
 @media (max-width: 576px) {
+    .container {
+        padding: 20px 15px;
+        margin: 5px;
+        border-radius: 20px;
+    }
+
     h1 {
-        font-size: 2.2rem;
-        line-height: 2.5rem;
+        font-size: 2rem;
+        line-height: 2.2rem;
     }
+
     .subtitle {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
+
     .theme-toggle {
-        top: 15px;
-        right: 15px;
-        padding: 10px 16px;
+        top: 10px;
+        right: 10px;
+        padding: 8px 14px;
         font-size: 0.8rem;
     }
-    .input-section {
-        gap: 10px;
-    }
+
     #taskInput, #addBtn {
-        padding: 15px 18px;
-        font-size: 1rem;
+        padding: 14px 16px;
+        font-size: 0.95rem;
     }
+
     .stats {
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-    .filter-buttons {
         gap: 8px;
     }
-    .todo-item {
-        padding: 15px;
+
+    .filter-buttons {
+        gap: 6px;
     }
+
+    .todo-item {
+        padding: 14px;
+        gap: 8px;
+    }
+
     .task-text {
         font-size: 0.95rem;
     }
+
     .task-time {
+        font-size: 0.8rem;
+    }
+
+    .delete-btn {
         font-size: 0.85rem;
+        padding: 10px;
+    }
+
+    .checkbox {
+        width: 28px;
+        height: 28px;
     }
 }
 
@@ -433,5 +481,6 @@ renderTasks();
 
 </body>
 </html>
+
 
 
