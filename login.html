@@ -3,90 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - My To-Do App</title>
+<title>Login</title>
+<link rel="icon" href="favicon.png">
 <style>
-    body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin:0;
-    }
-    .container {
-        background: rgba(255,255,255,0.15);
-        padding: 50px;
-        border-radius: 20px;
-        backdrop-filter: blur(20px);
-        text-align: center;
-    }
-    input {
-        padding: 15px;
-        width: 80%;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        border: 2px solid rgba(255,255,255,0.3);
-        outline: none;
-    }
-    button {
-        padding: 15px 30px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        background: #667eea;
-        color: white;
-        font-size: 1rem;
-        margin-bottom: 10px;
-    }
-    button:hover { background: #764ba2; }
-    .google-btn {
-        background: white;
-        color: black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 15px;
-    }
+  body{margin:0; font-family:'Inter',sans-serif; display:flex; justify-content:center; align-items:center; height:100vh;
+    background: linear-gradient(135deg,#667eea 0%,#764ba2 50%,#f093fb 100%); background-size:400% 400%; animation:gradientShift 15s ease infinite;}
+  @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .container{text-align:center; background:rgba(255,255,255,0.15); padding:50px; border-radius:30px; backdrop-filter:blur(15px);}
+  input{padding:12px 15px; border-radius:15px; border:none; margin-bottom:20px; width:200px;}
+  button{padding:12px 20px; border:none; border-radius:20px; cursor:pointer; margin:5px; font-weight:600;}
+  .btn-login{background:linear-gradient(135deg,#48bb78,#38a169); color:white;}
+  .btn-google{background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:10px;}
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>Login</h1>
-    <input type="text" id="username" placeholder="Enter username"><br>
-    <button onclick="login()">Login</button>
-    <div id="g_id_onload"
-        data-client_id="YOUR_GOOGLE_CLIENT_ID"
-        data-callback="handleCredentialResponse"
-        data-auto_prompt="false">
-    </div>
-    <div class="g_id_signin google-btn"></div>
-    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+  <h1>Login</h1>
+  <input type="text" id="username" placeholder="Enter username"><br>
+  <button class="btn btn-login" onclick="login()">Login</button><br><br>
+  <button class="btn btn-google" onclick="googleLogin()">Login with Google</button>
+  <p>Don't have an account? <a href="signup.html" style="color:white;">Sign up</a></p>
 </div>
 
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 function login(){
-    const username = document.getElementById("username").value.trim();
-    if(username){
-        localStorage.setItem("currentUser", username);
-        if(!localStorage.getItem(username+"_tasks")) localStorage.setItem(username+"_tasks", "[]");
-        window.location.href = "index.html";
-    } else alert("Enter a username");
+  const username = document.getElementById('username').value.trim();
+  if(!username){ alert('Enter username'); return;}
+  localStorage.setItem('currentUser', username);
+  window.location.href='index.html';
 }
 
-// Google login callback
-function handleCredentialResponse(response){
-    const googleUser = "google_" + response.credential;
-    localStorage.setItem("currentUser", googleUser);
-    if(!localStorage.getItem(googleUser+"_tasks")) localStorage.setItem(googleUser+"_tasks", "[]");
-    window.location.href = "index.html";
+// Fake Google login simulation
+function googleLogin(){
+  const googleUser = 'google_user';
+  localStorage.setItem('currentUser', googleUser);
+  window.location.href='index.html';
 }
 
 // Redirect if already logged in
-if(localStorage.getItem("currentUser")){
-    window.location.href = "index.html";
+if(localStorage.getItem('currentUser')){
+  window.location.href='index.html';
 }
 </script>
 </body>
