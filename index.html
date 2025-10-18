@@ -573,6 +573,14 @@
 </button>
 
 <script>
+    // On load
+const currentUser = localStorage.getItem("currentUser");
+if(!currentUser) window.location.href="login.html";
+tasks = JSON.parse(localStorage.getItem(currentUser+"_tasks")||"[]");
+
+// Whenever adding/deleting/toggling tasks:
+localStorage.setItem(currentUser+"_tasks",JSON.stringify(tasks));
+
     let tasks = [];
     let currentFilter = 'all';
     let particlesEnabled = true;
@@ -765,5 +773,6 @@
 </body>
 
 </html>
+
 
 
