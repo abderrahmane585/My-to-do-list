@@ -3,38 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up - My To-Do App</title>
+<title>Signup</title>
+<link rel="icon" href="favicon.png">
 <style>
-body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg,#667eea,#764ba2,#f093fb); display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
-.container { background: rgba(255,255,255,0.15); padding:50px; border-radius:20px; backdrop-filter:blur(20px); text-align:center; }
-input { padding:15px; width:80%; margin-bottom:20px; border-radius:10px; border:2px solid rgba(255,255,255,0.3); outline:none; }
-button { padding:15px 30px; border:none; border-radius:10px; cursor:pointer; background:#667eea; color:white; font-size:1rem; margin-bottom:10px; }
-button:hover { background:#764ba2; }
+  body{margin:0; font-family:'Inter',sans-serif; display:flex; justify-content:center; align-items:center; height:100vh;
+    background: linear-gradient(135deg,#4facfe 0%,#00f2fe 50%,#667eea 100%); background-size:400% 400%; animation:gradientShift 15s ease infinite;}
+  @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .container{text-align:center; background:rgba(255,255,255,0.15); padding:50px; border-radius:30px; backdrop-filter:blur(15px);}
+  input{padding:12px 15px; border-radius:15px; border:none; margin-bottom:20px; width:200px;}
+  button{padding:12px 20px; border:none; border-radius:20px; cursor:pointer; margin:5px; font-weight:600;}
+  .btn-signup{background:linear-gradient(135deg,#48bb78,#38a169); color:white;}
+  .btn-google{background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:10px;}
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>Sign Up</h1>
-    <input type="text" id="newuser" placeholder="Choose a username"><br>
-    <button onclick="signup()">Sign Up</button>
-    <p>Already have an account? <a href="login.html">Login</a></p>
+  <h1>Sign Up</h1>
+  <input type="text" id="username" placeholder="Choose username"><br>
+  <button class="btn btn-signup" onclick="signup()">Sign Up</button><br><br>
+  <button class="btn btn-google" onclick="googleSignup()">Sign Up with Google</button>
+  <p>Already have an account? <a href="login.html" style="color:white;">Login</a></p>
 </div>
 
 <script>
 function signup(){
-    const username = document.getElementById("newuser").value.trim();
-    if(!username) return alert("Enter username");
-    if(localStorage.getItem(username+"_tasks")) return alert("Username exists");
-    localStorage.setItem("currentUser", username);
-    localStorage.setItem(username+"_tasks", "[]");
-    window.location.href="index.html";
+  const username = document.getElementById('username').value.trim();
+  if(!username){ alert('Enter username'); return;}
+  localStorage.setItem('currentUser', username);
+  window.location.href='index.html';
 }
 
-// Skip if logged in
-if(localStorage.getItem("currentUser")){
-    window.location.href = "index.html";
+// Fake Google signup
+function googleSignup(){
+  const googleUser = 'google_user';
+  localStorage.setItem('currentUser', googleUser);
+  window.location.href='index.html';
+}
+
+// Redirect if already logged in
+if(localStorage.getItem('currentUser')){
+  window.location.href='index.html';
 }
 </script>
 </body>
 </html>
-
