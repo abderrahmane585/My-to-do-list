@@ -3,47 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signup</title>
-<link rel="icon" href="favicon.png">
+<title>Signup | To-Do App</title>
 <style>
-  body{margin:0; font-family:'Inter',sans-serif; display:flex; justify-content:center; align-items:center; height:100vh;
-    background: linear-gradient(135deg,#4facfe 0%,#00f2fe 50%,#667eea 100%); background-size:400% 400%; animation:gradientShift 15s ease infinite;}
-  @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-  .container{text-align:center; background:rgba(255,255,255,0.15); padding:50px; border-radius:30px; backdrop-filter:blur(15px);}
-  input{padding:12px 15px; border-radius:15px; border:none; margin-bottom:20px; width:200px;}
-  button{padding:12px 20px; border:none; border-radius:20px; cursor:pointer; margin:5px; font-weight:600;}
-  .btn-signup{background:linear-gradient(135deg,#48bb78,#38a169); color:white;}
-  .btn-google{background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:10px;}
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+        font-family: 'Inter', sans-serif;
+        display:flex; justify-content:center; align-items:center;
+        height:100vh; margin:0;
+        background: linear-gradient(135deg,#667eea,#764ba2,#f093fb);
+        background-size:400% 400%; animation:gradientShift 15s ease infinite;
+        color:white;
+    }
+    @keyframes gradientShift{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+    .container{
+        background: rgba(255,255,255,0.15); backdrop-filter: blur(15px);
+        padding:40px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); width:90%; max-width:400px;
+        text-align:center;
+    }
+    h2{margin-bottom:25px;}
+    input{ width:100%; padding:15px 20px; margin-bottom:20px; border:none; border-radius:10px; outline:none; font-size:1rem;}
+    button{ width:100%; padding:15px; border:none; border-radius:10px; background:#48bb78; color:white; font-weight:600; font-size:1rem; cursor:pointer; transition:0.3s;}
+    button:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+    .google-btn{ margin-top:10px; background:#4285F4;}
+    .google-btn:hover{ background:#357ae8; }
+    .link{ margin-top:15px; display:block; cursor:pointer; color:#f0f0f0; text-decoration:underline;}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>Sign Up</h1>
-  <input type="text" id="username" placeholder="Choose username"><br>
-  <button class="btn btn-signup" onclick="signup()">Sign Up</button><br><br>
-  <button class="btn btn-google" onclick="googleSignup()">Sign Up with Google</button>
-  <p>Already have an account? <a href="login.html" style="color:white;">Login</a></p>
+    <h2>Signup</h2>
+    <input type="text" id="username" placeholder="Enter a username" />
+    <button onclick="signup()">Signup</button>
+    <button class="google-btn" onclick="signupGoogle()">Signup with Google</button>
+    <span class="link" onclick="goLogin()">Already have an account? Login</span>
 </div>
-
 <script>
-function signup(){
-  const username = document.getElementById('username').value.trim();
-  if(!username){ alert('Enter username'); return;}
-  localStorage.setItem('currentUser', username);
-  window.location.href='index.html';
-}
+    function getUser(){ return localStorage.getItem('currentUser')||null; }
+    function signup(){
+        const username = document.getElementById('username').value.trim();
+        if(!username){ alert('Enter a username'); return; }
+        if(localStorage.getItem(username+'_tasks')){ alert('Username already exists'); return; }
+        localStorage.setItem('currentUser', username);
+        localStorage.setItem(username+'_tasks','[]');
+        window.location.href='index.html';
+    }
+    function signupGoogle(){
+        const username = prompt('Enter your Google email (simulated)');
+        if(username){
+            if(!localStorage.getItem(username+'_tasks')) localStorage.setItem(username+'_tasks','[]');
+            localStorage.setItem('currentUser', username);
+            window.location.href='index.html';
+        }
+    }
+    function goLogin(){ window.location.href='login.html'; }
 
-// Fake Google signup
-function googleSignup(){
-  const googleUser = 'google_user';
-  localStorage.setItem('currentUser', googleUser);
-  window.location.href='index.html';
-}
-
-// Redirect if already logged in
-if(localStorage.getItem('currentUser')){
-  window.location.href='index.html';
-}
+    if(getUser()) window.location.href='index.html';
 </script>
 </body>
 </html>
