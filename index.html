@@ -573,13 +573,20 @@
 </button>
 
 <script>
-    // On load
-const currentUser = localStorage.getItem("currentUser");
-if(!currentUser) window.location.href="login.html";
-tasks = JSON.parse(localStorage.getItem(currentUser+"_tasks")||"[]");
+   const currentUser = localStorage.getItem('currentUser');
+if(!currentUser){ window.location.href='main.html'; }
 
-// Whenever adding/deleting/toggling tasks:
-localStorage.setItem(currentUser+"_tasks",JSON.stringify(tasks));
+let tasks = JSON.parse(localStorage.getItem(currentUser+'_tasks') || '[]');
+
+// When adding, toggling, deleting tasks:
+localStorage.setItem(currentUser+'_tasks', JSON.stringify(tasks));
+
+// Logout button
+function logout(){
+    localStorage.removeItem('currentUser');
+    window.location.href='main.html';
+}
+
 
     let tasks = [];
     let currentFilter = 'all';
@@ -773,6 +780,7 @@ localStorage.setItem(currentUser+"_tasks",JSON.stringify(tasks));
 </body>
 
 </html>
+
 
 
 
