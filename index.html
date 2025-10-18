@@ -166,6 +166,100 @@ h1{font-size:2.5rem;}
 /* Theme toggle */
 .theme-toggle{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:12px 20px;color:white;cursor:pointer;transition:all 0.3s ease;font-size:0.9rem;}
 .theme-toggle:hover{background:rgba(255,255,255,0.15);transform:scale(1.05);}
+
+    /* ===== Mobile Responsiveness ===== */
+@media (max-width: 992px) {
+    .container {
+        padding: 40px 30px;
+        margin: 15px;
+    }
+    h1 {
+        font-size: 3rem;
+    }
+    .input-section {
+        flex-direction: column;
+        gap: 15px;
+    }
+    #taskInput, #addBtn {
+        width: 100%;
+        padding: 18px 20px;
+    }
+    .stats {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    .filter-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .todo-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+    .todo-item .task-content {
+        width: 100%;
+        gap: 10px;
+    }
+    .todo-item .task-actions {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .delete-btn {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .task-text {
+        font-size: 1rem;
+    }
+}
+
+/* ===== Extra Small Screens ===== */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2.2rem;
+        line-height: 2.5rem;
+    }
+    .subtitle {
+        font-size: 1rem;
+    }
+    .theme-toggle {
+        top: 15px;
+        right: 15px;
+        padding: 10px 16px;
+        font-size: 0.8rem;
+    }
+    .input-section {
+        gap: 10px;
+    }
+    #taskInput, #addBtn {
+        padding: 15px 18px;
+        font-size: 1rem;
+    }
+    .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .filter-buttons {
+        gap: 8px;
+    }
+    .todo-item {
+        padding: 15px;
+    }
+    .task-text {
+        font-size: 0.95rem;
+    }
+    .task-time {
+        font-size: 0.85rem;
+    }
+}
+
+    
 </style>
 </head>
 <body>
@@ -339,4 +433,5 @@ renderTasks();
 
 </body>
 </html>
+
 
