@@ -572,7 +572,7 @@
   Logout
 </button>
 
-    <script>
+<script>
     let tasks = [];
     let currentFilter = 'all';
     let particlesEnabled = true;
@@ -585,184 +585,6 @@
     const completedTasksEl = document.getElementById('completedTasks');
     const pendingTasksEl = document.getElementById('pendingTasks');
     const particlesContainer = document.getElementById('particles');
-
-    // Create floating particles
-    function createParticles() {
-        if (!particlesEnabled) return;
-        
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 6 + 's';
-            particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            particlesContainer.appendChild(particle);
-        }
-    }
-
-    // Toggle particles
-    function toggleParticles() {
-        particlesEnabled = !particlesEnabled;
-        if (particlesEnabled) {
-            createParticles();
-        } else {
-            particlesContainer.innerHTML = '';
-        }
-    }
-
-    // Add task function
-    function addTask() {
-        const taskText = taskInput.value.trim();
-        if (taskText === '') return;
-        
-        const task = {
-            id: Date.now(),
-            text: taskText,
-            completed: false,
-            createdAt: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-        };
-
-        tasks.unshift(task);
-        taskInput.value = '';
-        renderTasks();
-        updateStats();
-        saveTasks(); // 🟢 Save after adding
-
-        // Add sparkle effect
-        addBtn.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            addBtn.style.transform = '';
-        }, 150);
-    }
-
-    // Toggle task completion
-    function toggleTask(id) {
-        tasks = tasks.map(task => 
-            task.id === id ? {...task, completed: !task.completed} : task
-        );
-        renderTasks();
-        updateStats();
-        saveTasks(); // 🟢 Save after toggle
-    }
-
-    // Delete task with animation
-    function deleteTask(id) {
-        const taskElement = document.querySelector(`[data-task-id="${id}"]`);
-        if (taskElement) {
-            taskElement.style.transform = 'translateX(100%)';
-            taskElement.style.opacity = '0';
-            setTimeout(() => {
-                tasks = tasks.filter(task => task.id !== id);
-                renderTasks();
-                updateStats();
-                saveTasks(); // 🟢 Save after delete
-            }, 300);
-        }
-    }
-
-    // Filter tasks
-    function filterTasks(filter) {
-        currentFilter = filter;
-        
-        // Update active filter button
-        filterBtns.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.filter === filter);
-        });
-        
-        renderTasks();
-    }
-
-    // Render tasks
-    function renderTasks() {
-        let filteredTasks = tasks;
-        
-        if (currentFilter === 'completed') {
-            filteredTasks = tasks.filter(task => task.completed);
-        } else if (currentFilter === 'pending') {
-            filteredTasks = tasks.filter(task => !task.completed);
-        }
-
-        if (filteredTasks.length === 0) {
-            const emptyMessages = {
-                'completed': 'No completed tasks yet',
-                'pending': 'No active tasks',
-                'all': 'Your canvas awaits'
-            };
-            
-            const emptySubMessages = {
-                'completed': 'Complete some tasks to see them here!',
-                'pending': 'All caught up! Time to add new goals.',
-                'all': 'Add your first task and start your productivity journey!'
-            };
-
-            todoList.innerHTML = `
-                <div class="empty-state">
-                    <h3>${emptyMessages[currentFilter]}</h3>
-                    <p>${emptySubMessages[currentFilter]}</p>
-                </div>
-            `;
-            return;
-        }
-
-        todoList.innerHTML = filteredTasks.map(task => `
-            <li class="todo-item ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
-                <div class="task-content">
-                    <div class="checkbox ${task.completed ? 'checked' : ''}" 
-                         onclick="toggleTask(${task.id})"></div>
-                    <span class="task-text">${task.text}</span>
-                </div>
-                <div class="task-actions">
-                    <span class="task-time">${task.createdAt}</span>
-                    <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
-                </div>
-            </li>
-        `).join('');
-    }
-
-    // Update statistics with animation
-    function updateStats() {
-        const total = tasks.length;
-        const completed = tasks.filter(task => task.completed).length;
-        const pending = total - completed;
-
-        animateNumber(totalTasksEl, parseInt(totalTasksEl.textContent), total);
-        animateNumber(completedTasksEl, parseInt(completedTasksEl.textContent), completed);
-        animateNumber(pendingTasksEl, parseInt(pendingTasksEl.textContent), pending);
-    }
-
-    // Animate number changes
-    function animateNumber(element, from, to) {
-        const duration = 500;
-        const startTime = performance.now();
-        
-        function update(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            const current = Math.round(from + (to - from) * progress);
-            element.textContent = current;
-            
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
-        }
-        
-        requestAnimationFrame(update);
-    }
-
-    // Event listeners
-    addBtn.addEventListener('click', addTask);
-    
-    taskInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') addTask();
-    });
-
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterTasks(btn.dataset.filter);
-        });
-    });
 
     // ===== Login & LocalStorage =====
     function getUser() {
@@ -782,38 +604,166 @@
 
     function loadTasks() {
         const user = getUser();
-        if (!user) {
-            window.location.href = "login.html"; // redirect if not logged in
-            return;
-        }
-        const stored = JSON.parse(localStorage.getItem(user + "_tasks")) || [];
-        tasks = stored;
-    }
-
-    // Redirect to login if not logged in
-    const currentUser = localStorage.getItem("currentUser");
-    if (!currentUser) {
-        window.location.href = "login.html";
+        if (!user) return [];
+        return JSON.parse(localStorage.getItem(user + "_tasks")) || [];
     }
 
     function login() {
         const username = document.getElementById("username").value.trim();
         if (username) {
-            localStorage.setItem("currentUser", username); // Save username
-            window.location.href = "index.html";           // Go to to-do list
+            localStorage.setItem("currentUser", username);
+            window.location.href = "index.html";
         } else {
             alert("Please enter a username.");
         }
     }
 
-    // ===== Initialization =====
-    loadTasks();   // 🟢 Load saved tasks first
-    createParticles();
-    renderTasks();
-    updateStats();
+    // Redirect to login if not logged in
+    const currentUser = getUser();
+    if (!currentUser && !window.location.href.includes("login.html")) {
+        window.location.href = "login.html";
+    }
+
+    // ===== Visuals =====
+    function createParticles() {
+        if (!particlesEnabled) return;
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    function toggleParticles() {
+        particlesEnabled = !particlesEnabled;
+        particlesContainer.innerHTML = '';
+        if (particlesEnabled) createParticles();
+    }
+
+    // ===== To-Do Functions =====
+    function addTask() {
+        const taskText = taskInput.value.trim();
+        if (taskText === '') return;
+
+        const task = {
+            id: Date.now(),
+            text: taskText,
+            completed: false,
+            createdAt: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+        };
+
+        tasks.unshift(task);
+        taskInput.value = '';
+        renderTasks();
+        updateStats();
+        saveTasks(); // Save
+    }
+
+    function toggleTask(id) {
+        tasks = tasks.map(task => task.id === id ? {...task, completed: !task.completed} : task);
+        renderTasks();
+        updateStats();
+        saveTasks();
+    }
+
+    function deleteTask(id) {
+        const taskElement = document.querySelector(`[data-task-id="${id}"]`);
+        if (taskElement) {
+            taskElement.style.transform = 'translateX(100%)';
+            taskElement.style.opacity = '0';
+            setTimeout(() => {
+                tasks = tasks.filter(task => task.id !== id);
+                renderTasks();
+                updateStats();
+                saveTasks();
+            }, 300);
+        }
+    }
+
+    function filterTasks(filter) {
+        currentFilter = filter;
+        filterBtns.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.filter === filter);
+        });
+        renderTasks();
+    }
+
+    function renderTasks() {
+        let filteredTasks = tasks;
+        if (currentFilter === 'completed') filteredTasks = tasks.filter(t => t.completed);
+        else if (currentFilter === 'pending') filteredTasks = tasks.filter(t => !t.completed);
+
+        if (filteredTasks.length === 0) {
+            todoList.innerHTML = `
+                <div class="empty-state">
+                    <h3>${currentFilter === 'completed' ? 'No completed tasks yet' : currentFilter === 'pending' ? 'No active tasks' : 'Your canvas awaits'}</h3>
+                    <p>${currentFilter === 'completed' ? 'Complete some tasks to see them here!' : currentFilter === 'pending' ? 'All caught up! Time to add new goals.' : 'Add your first task and start your productivity journey!'}</p>
+                </div>
+            `;
+            return;
+        }
+
+        todoList.innerHTML = filteredTasks.map(task => `
+            <li class="todo-item ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
+                <div class="task-content">
+                    <div class="checkbox ${task.completed ? 'checked' : ''}" onclick="toggleTask(${task.id})"></div>
+                    <span class="task-text">${task.text}</span>
+                </div>
+                <div class="task-actions">
+                    <span class="task-time">${task.createdAt}</span>
+                    <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
+                </div>
+            </li>
+        `).join('');
+    }
+
+    function updateStats() {
+        const total = tasks.length;
+        const completed = tasks.filter(task => task.completed).length;
+        const pending = total - completed;
+
+        animateNumber(totalTasksEl, parseInt(totalTasksEl.textContent), total);
+        animateNumber(completedTasksEl, parseInt(completedTasksEl.textContent), completed);
+        animateNumber(pendingTasksEl, parseInt(pendingTasksEl.textContent), pending);
+    }
+
+    function animateNumber(element, from, to) {
+        const duration = 500;
+        const startTime = performance.now();
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const current = Math.round(from + (to - from) * progress);
+            element.textContent = current;
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    // ===== Event Listeners =====
+    addBtn?.addEventListener('click', addTask);
+    taskInput?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addTask();
+    });
+    filterBtns.forEach(btn => btn.addEventListener('click', () => filterTasks(btn.dataset.filter)));
+
+    // ===== Initialize after DOM ready =====
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.href.includes("login.html")) return;
+        tasks = loadTasks();
+        createParticles();
+        renderTasks();
+        updateStats();
+    });
 </script>
+
 
 </body>
 
 </html>
+
 
