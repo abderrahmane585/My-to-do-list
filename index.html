@@ -248,19 +248,34 @@ function toggleParticles(){particlesEnabled=!particlesEnabled; particlesContaine
 
 // ===== Tasks =====
 function saveTasks(){localStorage.setItem(currentUser+'_tasks', JSON.stringify(tasks));}
-function renderTasks(){
+    function renderTasks(){
     let filtered = tasks;
-    if(currentFilter==='completed') filtered=tasks.filter(t=>t.completed);
-    else if(currentFilter==='pending') filtered=tasks.filter(t=>!t.completed);
+    if(currentFilter==='completed') filtered = tasks.filter(t => t.completed);
+    else if(currentFilter==='pending') filtered = tasks.filter(t => !t.completed);
 
-    if(filtered.length===0){
-        todoList.innerHTML=`<div class="empty-state">
+    if(filtered.length === 0){
+        todoList.innerHTML = `<div class="empty-state">
 <h3>${currentFilter==='completed'?'No completed tasks yet':currentFilter==='pending'?'No active tasks':'Your canvas awaits'}</h3>
 <p>${currentFilter==='completed'?'Complete some tasks to see them here!':currentFilter==='pending'?'Add tasks to get started.':'Add something amazing!'}</p>
 </div>`;
         updateStats();
         return;
     }
+
+    todoList.innerHTML = '';
+    filtered.forEach((task) => {
+        const realIndex = tasks.indexOf(task); // <--- get the correct index in main array
+        const li = document.createElement('li'); 
+        li.className = 'todo-item' + (task.completed?' completed':'');
+        li.innerHTML = `
+            <div class="checkbox ${task.completed?'checked':''}" onclick="toggleTask(${realIndex})"></div>
+            <div class="task-text">${task.text}</div>
+            <button class="delete-btn" onclick="deleteTask(${realIndex})">Delete</button>
+        `;
+        todoList.appendChild(li);
+    });
+    updateStats();
+}
 
     todoList.innerHTML='';
     filtered.forEach((task,index)=>{
@@ -324,3 +339,4 @@ renderTasks();
 
 </body>
 </html>
+
