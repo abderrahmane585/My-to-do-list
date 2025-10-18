@@ -3,83 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome - My To-Do List</title>
-<link rel="icon" href="favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Welcome – To-Do App</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
 body {
-    height:100vh; display:flex; justify-content:center; align-items:center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg,#667eea,#764ba2,#f093fb);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    text-align:center;
 }
-@keyframes gradientShift {
-    0%,100% { background-position:0% 50%; }
-    50% { background-position:100% 50%; }
+h1 { font-size:3rem; margin-bottom:1rem; }
+p { font-size:1.2rem; margin-bottom:2rem; }
+button {
+    padding:15px 35px;
+    margin:10px;
+    border:none;
+    border-radius:25px;
+    font-size:1.1rem;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
 }
-
-.container {
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(20px);
-    padding: 60px 40px;
-    border-radius: 25px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-    animation: containerEnter 0.8s ease-out;
-}
-@keyframes containerEnter { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
-
-h1 { font-size:2.5rem; background: linear-gradient(135deg,#fff,#f7fafc,#e2e8f0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
-p { color: rgba(255,255,255,0.8); margin-bottom:30px; font-size:1rem; }
-
-.button {
-    display:block;
-    width:100%; padding:15px;
-    margin-bottom:20px;
-    border:none; border-radius:15px;
-    font-size:1rem; font-weight:600;
-    cursor:pointer; transition:0.3s;
-}
-
-.login-btn { background: linear-gradient(135deg,#667eea,#764ba2); color:white; }
-.login-btn:hover { transform: translateY(-2px); box-shadow:0 10px 25px rgba(0,0,0,0.2); }
-
-.signup-btn { background: linear-gradient(135deg,#48bb78,#38a169); color:white; }
-.signup-btn:hover { transform: translateY(-2px); box-shadow:0 10px 25px rgba(0,0,0,0.2); }
-
-@media(max-width:480px){ .container{padding:50px 25px;} h1{font-size:2rem;} }
+.login { background:#48bb78; }
+.login:hover { background:#38a169; }
+.signup { background:#4facfe; }
+.signup:hover { background:#00f2fe; }
 </style>
 </head>
 <body>
+<h1>Welcome to My To-Do App</h1>
+<p>Organize your tasks and boost your productivity!</p>
 
-<div class="container">
-    <h1>Welcome to My To-Do List</h1>
-    <p>Organize your tasks and boost your productivity!</p>
-    <button class="button login-btn" onclick="goLogin()">Login</button>
-    <button class="button signup-btn" onclick="goSignup()">Sign Up</button>
-</div>
+<button class="login" onclick="location.href='login.html'">Login</button>
+<button class="signup" onclick="location.href='signup.html'">Sign Up</button>
 
 <script>
-    function getUser(){
-        return localStorage.getItem('currentUser') || null;
-    }
-
-    // If already logged in, redirect to To-Do page
-    if(getUser()){
-        window.location.href = 'index.html'; // your to-do page
-    }
-
-    function goLogin(){
-        window.location.href = 'login.html';
-    }
-
-    function goSignup(){
-        window.location.href = 'signup.html';
-    }
+const currentUser = localStorage.getItem("currentUser");
+if(currentUser) window.location.href = "index.html";
 </script>
-
 </body>
 </html>
+
