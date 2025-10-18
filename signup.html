@@ -3,53 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up - My To-Do List</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Sign Up – To-Do App</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{height:100vh; display:flex; justify-content:center; align-items:center; background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe); background-size:400% 400%; animation: gradientShift 15s ease infinite;}
-@keyframes gradientShift {0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
-.container{background: rgba(255,255,255,0.12); backdrop-filter: blur(20px); padding: 50px 35px; border-radius:25px; width:100%; max-width:400px; text-align:center; box-shadow:0 25px 50px rgba(0,0,0,0.2);}
-h1{font-size:2.5rem;background:linear-gradient(135deg,#fff,#f7fafc,#e2e8f0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;}
-p{color:rgba(255,255,255,0.8);margin-bottom:30px;font-size:1rem;}
-input{width:100%;padding:15px 20px;margin-bottom:20px;border:none;border-radius:15px;font-size:1rem;}
-input:focus{outline:none; box-shadow:0 0 15px rgba(255,255,255,0.3);}
-.button{width:100%;padding:15px;margin-bottom:20px;border:none;border-radius:15px;font-size:1rem;font-weight:600;cursor:pointer;transition:0.3s;}
-.signup-btn{background:linear-gradient(135deg,#48bb78,#38a169);color:white;}
-.signup-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,0.2);}
-.google-btn{background:#4285F4;color:white; display:flex; justify-content:center; align-items:center; gap:10px;}
-.google-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+body { font-family: 'Inter', sans-serif; background:#764ba2; display:flex; justify-content:center; align-items:center; min-height:100vh; color:white; }
+.container { background:rgba(0,0,0,0.2); padding:50px; border-radius:20px; text-align:center; }
+input {padding:12px; margin:10px 0; border-radius:10px; border:none; width:80%; }
+button {padding:12px 25px; border:none; border-radius:10px; cursor:pointer; margin-top:10px; background:#4facfe; color:white; font-weight:600;}
+button:hover{background:#00f2fe;}
+a{color:#fff; text-decoration:underline; cursor:pointer;}
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>Sign Up</h1>
-    <p>Create your account to start managing tasks.</p>
-    <input type="text" id="username" placeholder="Username">
-    <button class="button signup-btn" onclick="signup()">Sign Up</button>
-    <button class="button google-btn" onclick="signupGoogle()">
-        <img src="https://img.icons8.com/color/24/google-logo.png"/> Sign Up with Google
-    </button>
-    <p style="color:white;font-size:0.9rem;">Already have an account? <a href="login.html" style="color:#667eea;text-decoration:none;">Login</a></p>
+<h1>Sign Up</h1>
+<input type="text" id="username" placeholder="Choose username"><br>
+<button onclick="signup()">Sign Up</button>
+<p>Already have an account? <a onclick="location.href='login.html'">Login</a></p>
 </div>
 
 <script>
-function getUser(){ return localStorage.getItem("currentUser") || null; }
-if(getUser()){ window.location.href="index.html"; }
-
 function signup(){
     const username = document.getElementById("username").value.trim();
-    if(username){
-        localStorage.setItem("currentUser", username);
-        localStorage.setItem(username+"_tasks","[]"); // init empty tasks
-        window.location.href="index.html";
-    } else { alert("Enter a username."); }
-}
-
-function signupGoogle(){
-    const username = "GoogleUser";
-    localStorage.setItem("currentUser", username);
-    localStorage.setItem(username+"_tasks","[]");
+    if(!username){ alert("Enter username"); return; }
+    if(localStorage.getItem(username+"_tasks")) { alert("Username exists!"); return; }
+    localStorage.setItem("currentUser",username);
+    localStorage.setItem(username+"_tasks",JSON.stringify([]));
     window.location.href="index.html";
 }
 </script>
